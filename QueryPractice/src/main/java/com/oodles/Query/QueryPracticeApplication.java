@@ -102,6 +102,8 @@ public class QueryPracticeApplication {
 //		List<Person>personList=personRepository.getDataByNC("Pushkar Bisht","Kashipur");
 //				System.out.println(personList);
 
+		personRepository.Delete();
+
 	}
 
 }
