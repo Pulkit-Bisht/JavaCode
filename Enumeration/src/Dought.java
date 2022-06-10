@@ -1,4 +1,8 @@
 public class Dought {
+
+    public Dought(){
+        System.out.println("Hello");
+    }
     public static void main(String[] args) {
         String str="10"+String.valueOf(20);
         System.out.println(str);
@@ -8,6 +12,9 @@ public class Dought {
         int v=Integer.valueOf(val2);
         int total=v+val;
         System.out.println(total);
+
+
+        Dought d=new Dought();
 
 
     }
