@@ -1,4 +1,4 @@
-package com.pushkar.Hello;
+package com.pushkar;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
