@@ -1,4 +1,0 @@
-User-Service_port=8080
-Contact-service-port=8090
-My-sever-Port=8761
-APi-Gateway-port=8888
