@@ -10,7 +10,7 @@ import javax.persistence.*;
 import java.util.List;
 
 @Component
-@Entity
+@Entity(name = "person")
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter

@@ -7,7 +7,10 @@ import com.myproject.service.PersonInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -22,7 +25,25 @@ public class PersonService implements PersonInterface {
                 findAll().stream().
                 map(this::entityToDto).collect(Collectors.toList());
     }
+    public  List<PersonDto> findName(String name){
 
+    return personRepository.getDataByName(name).stream().map(this::entityToDto).collect(Collectors.toList());
+    }
+    public  List<PersonDto> findEmail(String email){
+
+        return personRepository.getDataByEmail(email).stream().map(this::entityToDto).collect(Collectors.toList());
+    }
+    public  List<PersonDto> findById(Integer id){
+        Optional<Person> person = personRepository.findById(id);
+        Person person1 = person.get();
+        PersonDto personDto = entityToDto(person1);
+        List<PersonDto>personDtos=Arrays.asList(personDto);
+        return personDtos;
+    }
+    public  List<PersonDto> pattern(String p){
+        List<Person> personList = personRepository.getDataPattern(p);
+        return personList.stream().map(this::entityToDto).collect(Collectors.toList());
+    }
 @Override
     //Insert a Data in Address
     public PersonDto pushPerson(PersonDto personDto) {
@@ -37,6 +58,7 @@ public class PersonService implements PersonInterface {
         personRepository.deleteById(id);
         return "Data Deleted Successfully";
     }
+
 
     private PersonDto entityToDto(Person person) {
         PersonDto dto = new PersonDto();
