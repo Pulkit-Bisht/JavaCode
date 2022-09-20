@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<solver>
+    <!--    <environmentMode>FULL_ASSERT</environmentMode>-->
+    <solutionClass>com.employee.rostering.solution.SolutionEmployee</solutionClass>
+    <entityClass>com.employee.rostering.domain.Shift</entityClass>
+    <scoreDirectorFactory>
+        <scoreDrl>optaplanner/providerrosteringconstraint.drl</scoreDrl>
+    </scoreDirectorFactory>
+    <termination>
+        <bestScoreLimit>0hard/0medium/0soft</bestScoreLimit>
+        <unimprovedSecondsSpentLimit>30</unimprovedSecondsSpentLimit>
+        <minutesSpentLimit>2</minutesSpentLimit>
+    </termination>
+
+    <constructionHeuristic>
+        <termination>
+            <minutesSpentLimit>1</minutesSpentLimit>
+        </termination>
+        <constructionHeuristicType>FIRST_FIT</constructionHeuristicType>
+    </constructionHeuristic>
+
+
+    <localSearch>
+        <!--     <termination>
+           <unimprovedSecondsSpentLimit>15</unimprovedSecondsSpentLimit>
+        </termination>-->
+        <localSearchType>LATE_ACCEPTANCE</localSearchType>
+    </localSearch>
+
+
+</solver>

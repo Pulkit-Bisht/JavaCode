@@ -1,0 +1,67 @@
+dialect "java"
+import com.employee.rostering.domain.Shift;
+import com.employee.rostering.solution.SolutionEmployee;
+import com.employee.rostering.domain.Skill;
+import java.lang.String;
+import java.util.*;
+import java.lang.Boolean;
+import org.optaplanner.core.api.score.buildin.hardmediumsoftlong.HardMediumSoftLongScoreHolder;
+import org.optaplanner.core.api.score.buildin.hardmediumsoftlong.HardMediumSoftLongScore;
+
+
+global HardMediumSoftLongScoreHolder scoreHolder;
+
+//---------------------------------------------------------------------------------------------------------------------
+
+      rule "Skill mismatch for a session"
+          when
+              $shift: Shift(true)
+          then
+              scoreHolder.addHardConstraintMatch(kcontext, -$shift.getLengthInMinutes());
+      end
+//max 10 se jyda shift (week)
+//Additinal skills (optional)
+//ek employye ko 2 shift assign kre 2 hours break
+
+rule "No 2 shifts assign then 2 hours break each other"
+dialect:"mve1"
+when
+$s : Shift(
+employee != null,
+$e : employee,
+$leftEndDateTime : endDateTime)
+Shift(
+employee == $e,
+$leftEndDateTime <= endDateTime,
+//$leftEndDateTime.until(startDateTime, ChronoUnit.HOURS) < 2,
+this != $s)
+then
+scoreHolder.addHardConstraintMatch(kcontext, -1);
+end
+/*Condition: There are two shifts assigned to the same employee, the end time of the left shift is prior
+  of the other end time, the time difference between the end time of the left shift and the start time of
+  the other is less than 2 hours.*/
+
+/*
+rule "At most ten shift assignment per week per employee"
+  when
+  $s : Shift(
+  employee != null,
+  $e : employee,
+  $leftDay : startDateTime.toLocalDate()*5)
+  Shift(
+  employee == $e,
+  startDateTime.toLocalDate()*5 == $leftDay,
+  this != $s)
+  then
+  scoreHolder.addHardConstraintMatch(kcontext, -10);
+end*/
+/*
+rule "Required Additional skill for a shift"
+  when
+  Shift(
+  employee != null,
+  !getEmployee().hasSkills(getSpot().getRequiredSkillSet()))
+  then
+  scoreHolder.addHardConstraintMatch(kcontext, -100);
+end*/
